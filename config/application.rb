@@ -1,3 +1,6 @@
+require 'objspace'
+ObjectSpace.trace_object_allocations_start
+
 require_relative 'boot'
 
 require 'rails/all'
