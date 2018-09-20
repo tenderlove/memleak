@@ -5,16 +5,16 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-    bla = 7
+    bla = 9
     GC.start
     if params[:dump]
       File.open('heap.json', 'w') do |f|
         ObjectSpace.dump_all(output: f)
       end
     end
-    render plain: ObjectSpace.each_object(Object).select{ |o|
+    render plain: "[" + ObjectSpace.each_object(Object).select{ |o|
       o.class.ancestors.to_s.include?('ApplicationController')
-    }.map { |o| ObjectSpace.dump(o) }.join(',')
+    }.map { |o| ObjectSpace.dump(o) }.join(',') + "]"
   end
 
   # GET /users/1
